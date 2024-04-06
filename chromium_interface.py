@@ -4876,11 +4876,9 @@ class Interface:
     def run(self):
         import sys
 
-        chromium_path = (
-            find_path()
-        )  # Hier rufen wir die Funktion auf, um den Chromium-Pfad zu erhalten
-        for item in self.commandline:
-            flags = [chromium_path, item]
+        chromium_path = find_path()  # Calling the function to get the Chromium path
+        flags = [chromium_path]  # Initialize flags list outside the loop
+        flags.extend(self.commandline)  # Extend with all command line arguments
         try:
             subsystem.Popen(
                 flags,
@@ -4891,7 +4889,6 @@ class Interface:
         except KeyboardInterrupt:
             print("Chromium browser not found!")
             sys.exit(1)
-
 
 app = Interface()
 app.with_window_title("Interface")
